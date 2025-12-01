@@ -20,7 +20,7 @@ export default defineConfig({
     port: 5173,                  // Vite dev port
     strictPort: true,            // don't switch ports
     allowedHosts: [
-      'job-tracker.test',        // 👈 REQUIRED
+      import.meta.env.VITE_BASE_URL,        // 👈 REQUIRED
     ],
   },
 })
