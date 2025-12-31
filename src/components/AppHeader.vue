@@ -1,63 +1,72 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
+import RightSidebar from '@/components/RightSidebar.vue'
 
-// --- auth state ---
-// You can later replace this with Pinia, but this works perfectly for now.
-const userToken = ref(localStorage.getItem('userToken'))
+const sidebarOpen = ref(false)
 
-// Computed boolean
-const isAuthenticated = computed(() => !!userToken.value)
-
-// Watch for login/logout (custom events or localStorage changes)
-window.addEventListener('storage', () => {
-  userToken.value = localStorage.getItem('userToken')
-})
-
-const route = useRoute()
-
-const links = [
-  { name: 'Dashboard', to: '/dashboard' },
-]
-
-// Simple helper to style the active link
-const isActive = (path: string) => route.path === path
-
-function logout() {
-  localStorage.removeItem('userToken')
-  window.dispatchEvent(new Event('storage'))
-  window.location.href = '/login'
+function openSidebar() {
+  sidebarOpen.value = true
+}
+function closeSidebar() {
+  sidebarOpen.value = false
 }
 </script>
 
 <template>
-  <header class="fixed top-0 inset-x-0 border-b px-4 py-2 flex justify-between items-center bg-white shadow z-30">
-    <h1 class="font-bold text-lg">
-      Job Tracker
-    </h1>
+  <header class="fixed left-0 right-0 top-0 z-30 border-b bg-white">
+    <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
+      <div class="text-lg font-semibold text-gray-900">
+        Job Tracker
+      </div>
 
-    <nav v-if="isAuthenticated" class="space-x-4">
-      <RouterLink
-        v-for="link in links"
-        :key="link.to"
-        :to="link.to"
-        class="text-sm font-medium"
-        :class="[
-          isActive(link.to)
-            ? 'text-blue-600 underline'
-            : 'text-gray-600 hover:text-blue-600'
-        ]"
-      >
-        {{ link.name }}
-      </RouterLink>
-
+      <!-- Hamburger -->
       <button
-        v-if="isAuthenticated"
-        @click="logout"
-        class="text-sm font-medium text-red-600 hover:text-red-700"
+        type="button"
+        class="rounded-md p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        @click="openSidebar"
+        aria-label="Open menu"
+        :aria-expanded="sidebarOpen"
       >
-        Logout
+        <!-- Hamburger icon -->
+        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
       </button>
-    </nav>
+    </div>
   </header>
+
+  <!-- Sidebar -->
+  <RightSidebar v-model="sidebarOpen" title="Navigation">
+    <ul class="space-y-1">
+      <li>
+        <RouterLink
+          to="/dashboard"
+          class="block rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+          @click="closeSidebar"
+        >
+          Dashboard
+        </RouterLink>
+      </li>
+
+      <li>
+        <RouterLink
+          to="/jobs"
+          class="block rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+          @click="closeSidebar"
+        >
+          Jobs
+        </RouterLink>
+      </li>
+
+      <li>
+        <RouterLink
+          to="/postings"
+          class="block rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+          @click="closeSidebar"
+        >
+          Postings
+        </RouterLink>
+      </li>
+    </ul>
+  </RightSidebar>
 </template>

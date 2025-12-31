@@ -8,19 +8,16 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/dashboard',
+      name: 'Dashboard',
+      component: DashboardView,
+      meta: { requiresAuth: true }, // authenticated only,
+      alias: '/dashboard', // optional: keep old URL working
     },
     {
       path: '/login',
       name: 'login',
       component: LoginView,
       meta: { guestOnly: true }, // only for unauthenticated users
-    },
-    {
-      path: '/dashboard',
-      name: 'dashboard',
-      component: DashboardView,
-      meta: { requiresAuth: true }, // authenticated only
     },
     // add other authenticated pages here (all with requiresAuth: true)
     // {
