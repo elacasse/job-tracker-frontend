@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import RightSidebar from '@/components/RightSidebar.vue'
 
 const sidebarOpen = ref(false)
@@ -9,6 +9,22 @@ function openSidebar() {
 }
 function closeSidebar() {
   sidebarOpen.value = false
+}
+
+const userToken = ref(localStorage.getItem('userToken'))
+
+// Computed boolean
+const isAuthenticated = computed(() => !!userToken.value)
+
+// Watch for login/logout (custom events or localStorage changes)
+window.addEventListener('storage', () => {
+  userToken.value = localStorage.getItem('userToken')
+})
+
+function logout() {
+  localStorage.removeItem('userToken')
+  window.dispatchEvent(new Event('storage'))
+  window.location.href = '/login'
 }
 </script>
 
@@ -21,6 +37,7 @@ function closeSidebar() {
 
       <!-- Hamburger -->
       <button
+        v-if="isAuthenticated"
         type="button"
         class="rounded-md p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         @click="openSidebar"
@@ -36,11 +53,11 @@ function closeSidebar() {
   </header>
 
   <!-- Sidebar -->
-  <RightSidebar v-model="sidebarOpen" title="Navigation">
+  <RightSidebar v-model="sidebarOpen" title="Navigation" v-if="isAuthenticated">
     <ul class="space-y-1">
       <li>
         <RouterLink
-          to="/dashboard"
+          to="/"
           class="block rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
           @click="closeSidebar"
         >
@@ -50,11 +67,11 @@ function closeSidebar() {
 
       <li>
         <RouterLink
-          to="/jobs"
+          to="/resume"
           class="block rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
           @click="closeSidebar"
         >
-          Jobs
+          Resume
         </RouterLink>
       </li>
 
@@ -66,6 +83,16 @@ function closeSidebar() {
         >
           Postings
         </RouterLink>
+      </li>
+
+      <li>
+        <a
+          href="#"
+          @click="logout"
+          class="block rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+        >
+          Logout
+        </a>
       </li>
     </ul>
   </RightSidebar>

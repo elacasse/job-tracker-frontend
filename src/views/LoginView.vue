@@ -37,7 +37,7 @@ async function login() {
     window.dispatchEvent(new Event('storage'))
 
     // Optional: if ?redirect=/something is present, go there
-    const redirect = (route.query.redirect as string) || '/dashboard'
+    const redirect = (route.query.redirect as string) || '/'
     await router.push(redirect)
   } catch (e: any) {
     console.error(e)
