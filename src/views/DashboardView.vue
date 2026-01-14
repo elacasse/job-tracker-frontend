@@ -2,7 +2,7 @@
   <div class="p-8 text-center">
     <h1 class="text-4xl font-bold mb-4">Dashboard</h1>
 
-    <div class="max-w-7xl mx-auto p-6">
+    <div class="max-w-6xl mx-auto p-6 px-4">
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
         <RouterLink
           v-for="tile in tiles"

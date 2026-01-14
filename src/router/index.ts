@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { postingsRoutes } from '@/modules/postings'
 import LoginView from '@/views/LoginView.vue'
 import DashboardView from '@/views/DashboardView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
@@ -19,13 +20,8 @@ const router = createRouter({
       component: LoginView,
       meta: { guestOnly: true }, // only for unauthenticated users
     },
-    // add other authenticated pages here (all with requiresAuth: true)
-    // {
-    //   path: '/jobs',
-    //   name: 'jobs',
-    //   component: JobsListView,
-    //   meta: { requiresAuth: true },
-    // },
+
+    ...postingsRoutes,
 
     // 404 catch-all
     {
