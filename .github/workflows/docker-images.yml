@@ -43,6 +43,8 @@ jobs:
           tags: |
             type=ref,event=branch
             type=sha
+            type=sha,prefix=prod-
+            type=raw,value=prod
 
       - name: Build and push
         uses: docker/build-push-action@v6
@@ -52,9 +54,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           pull: true
           push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            ${{ steps.meta.outputs.tags }}
-            ${{ env.IMAGE_NAME }}:latest
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
