@@ -1,0 +1,32 @@
+# =========================
+# Build stage (Node 25)
+# =========================
+FROM node:25 AS build
+
+WORKDIR /app
+
+# Copy dependency manifests first for caching
+COPY package.json package-lock.json ./
+
+# Deterministic install (preferred over npm install)
+RUN npm ci
+
+# Copy source and build
+COPY . .
+RUN npm run build
+
+
+# =========================
+# Runtime stage (static web server)
+# =========================
+FROM nginx:alpine
+
+# SPA-friendly nginx config
+# Put this nginx.conf at repo root (see below)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copy built output
+COPY --from=build /app/dist /usr/share/nginx/html
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

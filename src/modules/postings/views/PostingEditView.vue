@@ -11,7 +11,7 @@ import {storeToRefs} from "pinia";
 const route = useRoute()
 const router = useRouter()
 const store = usePostingsStore()
-const { current } = storeToRefs(store)
+const {current} = storeToRefs(store)
 
 const id = computed(() => String(route.params.id ?? ''))
 
@@ -54,8 +54,9 @@ async function submit() {
 }
 
 function cancel() {
-  if (!store.current) return
-  void router.push({name: 'postings.show', params: {id: current?.id}})
+  const id = current.value?.id
+  if (!id) return
+  void router.push({name: 'postings.show', params: {id}})
 }
 </script>
 
