@@ -5,6 +5,14 @@ FROM node:25 AS build
 
 WORKDIR /app
 
+ARG PROD_BASE_URL
+ARG PROD_API_BASE_URL
+ARG PROD_APP_TOKEN
+
+ENV PROD_BASE_URL=$PROD_BASE_URL
+ENV PROD_API_BASE_URL=$PROD_API_BASE_URL
+ENV PROD_APP_TOKEN=$PROD_APP_TOKEN
+
 # Copy dependency manifests first for caching
 COPY package.json package-lock.json ./
 
