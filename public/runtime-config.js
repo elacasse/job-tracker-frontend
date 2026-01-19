@@ -1,0 +1,4 @@
+window.__RUNTIME_CONFIG__ = {
+  API_BASE_URL: "__API_BASE_URL__",
+  APP_TOKEN: "__APP_TOKEN__"
+}

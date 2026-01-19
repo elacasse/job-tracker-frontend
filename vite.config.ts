@@ -11,9 +11,9 @@ export default defineConfig(({ mode }) => {
   // Vite expects: true | string[] | undefined
   let allowedHosts: true | string[] | undefined = true
 
-  if (env.VITE_BASE_URL) {
+  if (env.BASE_URL) {
     try {
-      const url = new URL(env.VITE_BASE_URL)
+      const url = new URL(env.BASE_URL)
       // Provide as an array (even if only one host)
       allowedHosts = [url.hostname]
     } catch {

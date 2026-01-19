@@ -1,7 +1,11 @@
 import axios, { type AxiosInstance } from 'axios';
+const runtime = (window as any).__RUNTIME_CONFIG__ ?? {}
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? runtime.API_BASE_URL;
+const APP_TOKEN = import.meta.env.VITE_APP_TOKEN ?? runtime.APP_TOKEN
 
 const api: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL: API_BASE_URL,
   headers: {
     'Accept': 'application/vnd.api+json',
     'Content-Type': 'application/vnd.api+json',
@@ -10,7 +14,7 @@ const api: AxiosInstance = axios.create({
 
 // Always attach App Token
 api.interceptors.request.use((config) => {
-  const appToken = import.meta.env.VITE_APP_TOKEN;
+  const appToken = APP_TOKEN;
   if (appToken) {
     config.headers['X-App-Token'] = appToken;
   }
