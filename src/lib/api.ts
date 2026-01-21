@@ -4,8 +4,6 @@ const runtime = (window as any).__RUNTIME_CONFIG__ ?? {}
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? runtime.API_BASE_URL;
 const APP_TOKEN = import.meta.env.VITE_APP_TOKEN ?? runtime.APP_TOKEN;
 
-console.log(API_BASE_URL, APP_TOKEN);
-
 const api: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   headers: {
