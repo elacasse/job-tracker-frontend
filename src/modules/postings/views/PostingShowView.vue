@@ -13,6 +13,7 @@ import {
   formatWorkMode
 } from '../ui/postings.formatters'
 import type {PostingAttributes} from "@/modules/postings/types/postings.types.ts";
+import MarkdownRenderer from "@/components/MarkdownRenderer.vue";
 
 const route = useRoute()
 const store = usePostingsStore()
@@ -113,16 +114,12 @@ const updatedAt = computed(() => current.value?.attributes.updatedAt ?? '')
 
       <div class="rounded-lg border border-gray-200 p-4 space-y-2">
         <h2 class="font-semibold">Description</h2>
-        <p class="text-sm text-gray-800 whitespace-pre-line">
-          {{ posting.description }}
-        </p>
+        <MarkdownRenderer :content="posting.description" />
       </div>
 
       <div v-if="posting.coverLetter" class="rounded-lg border border-gray-200 p-4 space-y-2">
         <h2 class="font-semibold">Cover letter</h2>
-        <p class="text-sm text-gray-800 whitespace-pre-line">
-          {{ posting.coverLetter }}
-        </p>
+        <MarkdownRenderer :content="posting.coverLetter" />
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-gray-700">
