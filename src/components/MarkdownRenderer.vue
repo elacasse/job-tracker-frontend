@@ -9,7 +9,6 @@ const props = defineProps<{
 
 const html = computed(() => {
   const raw = marked.parse(props.content ?? '') as string
-  console.log(raw)
   return DOMPurify.sanitize(raw)
 })
 </script>
