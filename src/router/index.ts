@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { postingsRoutes } from '@/modules/postings'
+import { resumeRoutes } from '@/modules/resume'
 import LoginView from '@/views/LoginView.vue'
 import DashboardView from '@/views/DashboardView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
@@ -22,6 +23,7 @@ const router = createRouter({
     },
 
     ...postingsRoutes,
+    ...resumeRoutes,
 
     // 404 catch-all
     {
