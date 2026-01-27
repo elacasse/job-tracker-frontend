@@ -67,6 +67,16 @@ function logout() {
 
       <li>
         <RouterLink
+          to="/profile"
+          class="block rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+          @click="closeSidebar"
+        >
+          Profile
+        </RouterLink>
+      </li>
+
+      <li>
+        <RouterLink
           to="/resume"
           class="block rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
           @click="closeSidebar"
