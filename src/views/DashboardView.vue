@@ -32,10 +32,11 @@
 </template>
 
 <script setup lang="ts">
-import { BriefcaseIcon, UserIcon } from '@heroicons/vue/24/outline'
+import { BriefcaseIcon, UserIcon, DocumentTextIcon } from '@heroicons/vue/24/outline'
 
 const tiles = [
+  { name: 'profile', label: 'User Profile', to: '/profile', icon: UserIcon },
   { name: 'postings', label: 'Postings', to: '/postings', icon: BriefcaseIcon },
-  { name: 'resume', label: 'Resume', to: '/resume', icon: UserIcon },
+  { name: 'resume', label: 'Resume', to: '/resume', icon: DocumentTextIcon },
 ]
 </script>
