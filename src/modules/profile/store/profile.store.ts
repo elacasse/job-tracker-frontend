@@ -2,22 +2,20 @@ import {defineStore} from 'pinia'
 import {getProfile, updateProfile} from "@/modules/profile/api/profile.api.ts";
 import type {ProfileAttributes, ProfileResource} from '@/modules/profile/types/profile.types'
 import {toMessage} from '@/stores/common.store.ts'
+import {createEmptyProfileResource} from "@/modules/profile/types/profile.types";
 
 type State = {
-  profile: ProfileResource | null
+  profile: ProfileResource
   loading: boolean
   error: string | null
   saveLoading: boolean
   saveError: string | null
 }
 
-type JsonApiError = { title?: string; detail?: string }
-type NormalizedApiError = { status?: number; errors?: JsonApiError[] }
-
 export const useProfileStore = defineStore('users', {
 
   state: (): State => ({
-    profile: null,
+    profile: createEmptyProfileResource(),
     loading: false,
     error: null,
 
@@ -31,7 +29,7 @@ export const useProfileStore = defineStore('users', {
     },
 
     hasProfile(): boolean {
-      return this.profile !== null
+      return this.profile.id !== ''
     },
   },
 
@@ -45,7 +43,7 @@ export const useProfileStore = defineStore('users', {
         this.profile = res.data
         return this.profile
       } catch (e) {
-        this.profile = null
+        this.profile = createEmptyProfileResource()
         this.error = toMessage(e)
         return null
       } finally {
@@ -58,7 +56,6 @@ export const useProfileStore = defineStore('users', {
       this.saveError = null
 
       try {
-        console.log(this.profile.id);
         const res = await updateProfile(this.profile.id, attrs)
         this.profile = res.data
         return this.profile
@@ -68,11 +65,6 @@ export const useProfileStore = defineStore('users', {
       } finally {
         this.saveLoading = false
       }
-    },
-
-    clearProfile() {
-      this.profile = null
-      this.error = null
     },
   },
 })

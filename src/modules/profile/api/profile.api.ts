@@ -26,10 +26,10 @@ export async function updateProfile(
     },
   }
 
-  console.log(id);
-
   const response = await api.patch<ProfileViewResponse, AxiosResponse<ProfileViewResponse>>(
     `/api/v1/users/${encodeURIComponent(id)}`,
     payload
   )
+
+  return response.data;
 }

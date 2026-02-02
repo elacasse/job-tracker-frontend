@@ -31,6 +31,24 @@ export type ProfileResource = {
     attributes: ProfileAttributes
 }
 
+export const createEmptyProfileResource = (): ProfileResource => <ProfileResource>({
+  type: 'users',
+  id: '',
+  attributes: {
+    name: '',
+    title: '',
+    address: '',
+    city: '',
+    state: '',
+    country: '',
+    zip: '',
+    phone: '',
+    email: '',
+    createdAt: '',
+    updatedAt: '',
+  }
+})
+
 export type ProfileViewResponse = {
     jsonapi?: { version: string }
     data: ProfileResource
