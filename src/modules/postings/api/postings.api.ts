@@ -1,8 +1,6 @@
 import api from '@/lib/api'
 import type {AxiosResponse} from 'axios'
 import type {
-  JsonApiCreateDocument,
-  JsonApiUpdateDocument,
   PostingAttributes,
   PostingCreateAttributes,
   PostingShowResponse,
@@ -10,6 +8,7 @@ import type {
   PostingStatus,
   PostingUpdateAttributes,
 } from '../types/postings.types'
+import type {JsonApiCreateDocument, JsonApiUpdateDocument,} from '@/types/common.types.ts'
 
 const POSTINGS_TYPE: 'postings' = 'postings'
 

@@ -9,6 +9,7 @@ import type {
   PostingUpdateAttributes
 } from '../types/postings.types'
 import type {PostingsRouteQuery} from '../routing/postings.query'
+import {toMessage} from '@/stores/common.store.ts'
 
 type JsonApiError = { title?: string; detail?: string }
 type NormalizedApiError = { status?: number; errors?: JsonApiError[] }
@@ -32,17 +33,6 @@ type State = {
 
   saveLoading: boolean
   saveError: string | null
-}
-
-function toMessage(e: unknown): string {
-  if (typeof e === 'object' && e !== null) {
-    const err = e as NormalizedApiError
-    const first = err.errors?.[0]
-    if (first?.detail) return first.detail
-    if (first?.title) return first.title
-    if (err.status) return `Request failed (HTTP ${err.status}).`
-  }
-  return e instanceof Error ? e.message : String(e)
 }
 
 export const usePostingsStore = defineStore('postings', {
